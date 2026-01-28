@@ -2,6 +2,7 @@ using System;
 
 class Program
 {
+    //To Do List: Finish journal class, finish entry class, 
     static void Main(string[] args)
     {
         //test the prompt class
@@ -17,7 +18,14 @@ class Program
         promptList.AddPrompt("If had one thing I could do over today, what would it be?");
 
         string myPrompt = promptList.GetPrompt();
-        Console.WriteLine(myPrompt);
+        
+
+
+        //Test the Entry class
+
+        Entry newEntry = new Entry();
+        newEntry.NewEntry(myPrompt);
+        newEntry.DisplayEntry();
 
 
     }

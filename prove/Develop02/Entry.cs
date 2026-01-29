@@ -29,9 +29,11 @@ class Entry
         _prompt = prompt;
     }
     //Display the users entry 
-    public void DisplayEntry()
+    public string DisplayEntry()
     {
-        Console.WriteLine($"Date: {_date} - Prompt: {_prompt}\n{_response}");
+        // Console.WriteLine($"Date: {_date} - Prompt: {_prompt}\n{_response}");
+        string entryDisplay = $"Date: {_date} - Prompt: {_prompt}\n{_response}";
+        return entryDisplay;
     }
 }
     

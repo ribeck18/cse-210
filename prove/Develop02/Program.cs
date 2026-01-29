@@ -25,8 +25,17 @@ class Program
 
         Entry newEntry = new Entry();
         newEntry.NewEntry(myPrompt);
-        newEntry.DisplayEntry();
+        Console.WriteLine(newEntry.DisplayEntry());
 
+
+
+        //Test Program
+        Journal myJournal = new Journal();
+        myJournal.AddEntry(newEntry);
+        myJournal.Save();
+
+        //Test save to txt
+        myJournal.Save();
 
     }
 }

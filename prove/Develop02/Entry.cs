@@ -5,11 +5,11 @@ class Entry
 //Attributes 
 
     //Users journal Entry 
-    string _response;
+    public string _response {get; set;}
     //Date of entry 
-    string _date;
+    public string _date {get; set;}
     //Prompt used
-    string _prompt;
+    public string _prompt {get; set;}
 
 //Methods
     

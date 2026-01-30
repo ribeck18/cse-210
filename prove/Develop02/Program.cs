@@ -2,18 +2,18 @@ using System;
 
 class Program
 {
-    //To Do List: 
-    //Things Done since last commit: Way to choose file to save to and way to choose file to load from.
+    //To Do List: Extra credit option - use .JSON instead of .txt
+    
     static void Main(string[] args)
     {
         //Create the prompt list
         Prompts promptList = new Prompts();
         promptList._questions = [];
-        promptList.AddPrompt("Who was the most interesting person I interacted with today?");
-        promptList.AddPrompt("What was the best part of my day?");
+        promptList.AddPrompt("In what way(s) did I grow today?");
+        promptList.AddPrompt("What am I most grateful for today?");
         promptList.AddPrompt("How did I see the hand of the Lord in my life today?");
         promptList.AddPrompt("What was the strongest emotion I felt today?");
-        promptList.AddPrompt("If had one thing I could do over today, what would it be?");
+        promptList.AddPrompt("What challenged me today, and how did I respond to it?");
 
         string menuSelect = "";
         Journal myJournal = new Journal();

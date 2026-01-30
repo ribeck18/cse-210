@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 class Entry
 {
 //Attributes 
@@ -34,6 +36,23 @@ class Entry
         // Console.WriteLine($"Date: {_date} - Prompt: {_prompt}\n{_response}");
         string entryDisplay = $"Date: {_date} - Prompt: {_prompt}\n{_response}";
         return entryDisplay;
+    }
+    
+    //convert to file format
+    public string EntryToFile()
+    {
+        return $"{_date}|{_prompt}|{_response}";
+    }
+
+    //Convert to entry format
+    public static Entry FileToEntry(string date, string prompt, string response)
+    {
+        Entry entryFromFile = new Entry();
+        entryFromFile._date = date;
+        entryFromFile._prompt = prompt;
+        entryFromFile._response = response;
+
+        return entryFromFile;
     }
 }
     

@@ -2,7 +2,8 @@ using System;
 
 class Program
 {
-    //To Do List: Allow user to choose .txt file name. 
+    //To Do List: 
+    //Things Done since last commit: Way to choose file to save to and way to choose file to load from.
     static void Main(string[] args)
     {
         //Create the prompt list
@@ -19,16 +20,16 @@ class Program
         while (menuSelect != "q")
         {
             //Menu
-            Console.WriteLine("What would you like to do?");
+            Console.WriteLine("\nWhat would you like to do?");
             Console.WriteLine("1. Write\n2. Display\n3. Load\n4. Save\n5.Quit");
-            Console.WriteLine(">");
+            Console.Write(">");
             menuSelect = Console.ReadLine();
 
             if (menuSelect == "1")
             {
                 //Get a new prompt
                 string journalPrompt = promptList.GetPrompt();
-                
+
                 //Create an entry and add it to the journal
                 Entry newEntry = new Entry();
                 newEntry.NewEntry(journalPrompt);

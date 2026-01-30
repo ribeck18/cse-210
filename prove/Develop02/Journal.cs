@@ -1,4 +1,5 @@
 using System.IO;
+using System.IO.Enumeration;
 using System.Runtime.CompilerServices;
 
 class Journal
@@ -20,7 +21,10 @@ class Journal
     //Save the list to a .txt file 
     public void Save()
     {
-        string filename = "JournalFile.txt";
+        //Create and name a file
+        Console.WriteLine("Please enter a name for your journal.");
+        Console.Write(">");
+        string filename = $"{Console.ReadLine()}.txt";
         using (StreamWriter outputfile = new StreamWriter(filename, true))
 
         {
@@ -35,7 +39,9 @@ class Journal
     public void Load()
     {
         //get the file 
-        string filename = "JournalFile.txt";
+        Console.WriteLine("Please enter a journal to load.");
+        Console.Write(">");
+        string filename = $"{Console.ReadLine()}.txt";
         string[] lines = System.IO.File.ReadAllLines(filename);
 
         //Create an empty list of entrys

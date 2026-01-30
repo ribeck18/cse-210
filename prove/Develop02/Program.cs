@@ -2,7 +2,7 @@ using System;
 
 class Program
 {
-    //To Do List: Extra credit option - use .JSON instead of .txt
+    //Creativity and Exceeding Requirments: I altered the way that the journal is saved so that it saves in .json rather than in .txt
     
     static void Main(string[] args)
     {

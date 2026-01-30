@@ -2,7 +2,7 @@ using System;
 
 class Program
 {
-    //To Do List: Create a menu system
+    //To Do List: Allow user to choose .txt file name. 
     static void Main(string[] args)
     {
         //Create the prompt list
@@ -16,7 +16,6 @@ class Program
 
         string menuSelect = "";
         Journal myJournal = new Journal();
-        string journalPrompt = promptList.GetPrompt();
         while (menuSelect != "q")
         {
             //Menu
@@ -27,6 +26,9 @@ class Program
 
             if (menuSelect == "1")
             {
+                //Get a new prompt
+                string journalPrompt = promptList.GetPrompt();
+                
                 //Create an entry and add it to the journal
                 Entry newEntry = new Entry();
                 newEntry.NewEntry(journalPrompt);

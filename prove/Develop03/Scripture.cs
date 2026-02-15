@@ -34,14 +34,22 @@ class Scripture
         //loop based on count argument
         for (int i = 0; i < count;)
         {
+            //create a list of 
             //random number in word count
             Random newRandom = new Random();
-            int num = newRandom.Next(1, wordCount);
+            int num = newRandom.Next(0, wordCount);
 
             //sets random word to hidden - If word is already hidden try again
             Word hiddenWord = _words[num];
             if (hiddenWord.GetHidden() == true)
-                continue;
+                if (IsAllHidden() == true)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
             hiddenWord.IsHidden(true);
             i++;
         }
@@ -62,5 +70,19 @@ class Scripture
 
         return $"{reference} - {verse}";
 
+    }
+
+    public bool IsAllHidden()
+    {
+        //check each word to see if it is hidden or not. if any word is not hidden return false
+        foreach (Word word in _words)
+        {
+            if (word.GetHidden() == false)
+            {
+                return false;
+            }
+        }  
+        //if all the words are hidden it returns true
+        return true; 
     }
 }

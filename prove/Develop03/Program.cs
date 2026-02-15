@@ -80,9 +80,15 @@ class Program
             {
                 Console.WriteLine("Goodbye.");
                 isQuit = true;
+                break;
             }
             Console.Clear();
             scripture.HideWords(hideCount);
+
+            if (scripture.IsAllHidden() == true)
+            {
+                break;
+            }
         }
     }
 }

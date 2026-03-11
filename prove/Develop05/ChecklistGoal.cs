@@ -10,6 +10,14 @@ class ChecklistGoal : Goal
         _requiredCompletions = requiredCompletes;
     }
 
+    //Use this constructor when rehydrating from string.
+    public ChecklistGoal(string name, string description, int pointValue, int total, bool isComplete, int requiredCompletes, int bonusValue, int completionCount):base(name, description, pointValue, total, isComplete)
+    {
+        _bonusValue = bonusValue;
+        _requiredCompletions = requiredCompletes;
+        _completionCount = completionCount;
+    }
+
     public override void CompletionEvent()
     {
         _completionCount += 1;
@@ -31,7 +39,7 @@ class ChecklistGoal : Goal
         _totalPoints += _bonusValue;
     }
 
-        public override string GetGoalString()
+    public override string GetGoalString()
     {
         if (_isComplete == false)
         {
@@ -43,4 +51,25 @@ class ChecklistGoal : Goal
         }
     }
 
+    public override Dictionary<string, string> GetDict()
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>
+        {
+            {"class", "CheckListGoal"},
+            {"name", _name},
+            {"description", _description},
+            {"pointValue", _pointValue.ToString()},
+            {"totalPoints", _totalPoints.ToString()},
+            {"isComplete", _isComplete.ToString()},
+            {"completionCount", _completionCount.ToString()},
+            {"requiredCompletions", _requiredCompletions.ToString()},
+            {"bonusValue", _bonusValue.ToString()}
+        };
+        return dict;
+    }
+    public override string GetSaveString()
+    {
+        string saveString = $"ChecklistGoal|{_name}|{_description}|{_pointValue}|{_totalPoints}|{_isComplete}|{_completionCount}|{_requiredCompletions}|{_bonusValue}";
+        return saveString;
+    }
 }

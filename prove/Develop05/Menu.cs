@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks.Dataflow;
 using System.Xml.Serialization;
 
 class Menu
@@ -19,6 +20,7 @@ class Menu
 
         return int.Parse(choice);
     }
+
     /// <summary>
     /// Asks a user for information to create a goal and creates the goal according to user input. Checks that user does not attempet to make a goal that doesnt exist.
     /// </summary>
@@ -63,5 +65,29 @@ class Menu
             newGoal = checklistGoal;
         }
         return newGoal; 
+    }
+    public void DisplayGoals(List<Goal> goalList)
+    {
+        int count = 0;
+        foreach (Goal goal in goalList)
+        {
+            count += 1;
+            Console.WriteLine($"{count}. {goal.GetGoalString()}");
+        }
+    }
+    public void SaveGoals(List<Goal> goalList)
+    {
+        foreach (Goal goal in goalList)
+        {
+            
+        }
+    }
+    public void LoadGoals()
+    {
+        
+    }
+    public void RecordEvent()
+    {
+        
     }
 }

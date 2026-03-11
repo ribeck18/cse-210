@@ -16,6 +16,14 @@ abstract class  Goal
         _description = description;
         _pointValue = value;
     }
+    public Goal(string name, string description, int value, int total, bool isComplete)
+    {
+        _name = name;
+        _description = description;
+        _pointValue = value;
+        _totalPoints = total;
+        _isComplete = isComplete;
+    }
 
     //Methods
     public abstract void CompletionEvent();
@@ -43,4 +51,8 @@ abstract class  Goal
     {
         return _totalPoints;
     }
+
+    public abstract Dictionary<string, string> GetDict(); //I was going to use this to save but I remembered we can't use JSON in this class.
+
+    public abstract string GetSaveString();
 }

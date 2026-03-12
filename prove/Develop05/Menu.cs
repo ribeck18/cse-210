@@ -1,10 +1,5 @@
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Drawing;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks.Dataflow;
-using System.Xml.Serialization;
+using System.IO;
+using System.Runtime.Serialization;
 
 class Menu
 {
@@ -66,6 +61,11 @@ class Menu
         }
         return newGoal; 
     }
+
+    /// <summary>
+    /// Displays all of the goals in the goalList as strings.
+    /// </summary>
+    /// <param name="goalList">list of Goal objects</param>
     public void DisplayGoals(List<Goal> goalList)
     {
         int count = 0;
@@ -75,17 +75,66 @@ class Menu
             Console.WriteLine($"{count}. {goal.GetGoalString()}");
         }
     }
-    public void SaveGoals(List<Goal> goalList)
+
+    /// <summary>
+    /// Saves the working goal list to a file
+    /// </summary>
+    /// <param name="goalList">Working list of goals</param>
+    /// <param name="fileName">filename</param>
+    public void SaveGoals(List<Goal> goalList, string filePath)
     {
-        foreach (Goal goal in goalList)
+        using(StreamWriter output = new StreamWriter(filePath))
         {
-            
+            foreach (Goal goal in goalList)
+            {
+                output.WriteLine(goal.GetSaveString());
+            }
         }
     }
-    public void LoadGoals()
+    
+    /// <summary>
+    /// Loads all of the goals from the saved goals files as strings. Converts each goal string into the correct goal object.
+    /// </summary>
+    /// <param name="fileName">path of file to be loaded</param>
+    /// <returns>list of goal objects</returns>
+    public List<Goal> LoadGoals(string fileName)
     {
-        
+        string[] goalStringList = File.ReadAllLines(fileName);
+        List<Goal> goalList = [];
+
+        foreach (string goalString in goalStringList)
+        {
+           string[] parts = goalString.Split("|");
+           string type = parts[0];
+           string name = parts[1];
+           string description = parts[2];
+           int pointValue = int.Parse(parts[3]);
+           int totalPoints = int.Parse(parts[4]);
+           bool isComplete = bool.Parse(parts[5]);
+           if (type == "ChecklistGoal")
+            {
+                int completionCount = int.Parse(parts[6]);
+                int requiredCompletes = int.Parse(parts[7]);
+                int bonusValue = int.Parse(parts[8]);
+
+                ChecklistGoal checklistGoal = new ChecklistGoal(name, description, pointValue, totalPoints, isComplete, requiredCompletes, bonusValue, completionCount);
+                goalList.Add(checklistGoal);
+            }
+
+           if (type == "SimpleGoal")
+            {
+                SimpleGoal simpleGoal = new SimpleGoal(name, description, pointValue, totalPoints, isComplete);
+                goalList.Add(simpleGoal);
+            }
+            else
+            {
+                EternalGoal eternalGoal = new EternalGoal(name, description, pointValue, totalPoints, isComplete);
+                goalList.Add(eternalGoal);
+            }    
+        }
+        return goalList;
     }
+
     public void RecordEvent()
     {
         

@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+
 class ChecklistGoal : Goal
 {
 
@@ -22,19 +24,31 @@ class ChecklistGoal : Goal
     {
         _completionCount += 1;
         _totalPoints += _pointValue;
+
+        bool complete = CheckComplete();
+        if (complete == true)
+        {
+            AwardBonus();
+        }
     }
-    public bool CheckComplete()
+    private bool CheckComplete()
     {
         if (_completionCount == _requiredCompletions)
         {
+            _isComplete = true;
             return true;
         }
         else
         {
+            _isComplete = false;
             return false;
         }
     }
-    public void AwardBonus()
+    public int GetBonus()
+    {
+        return _bonusValue;
+    }
+    private void AwardBonus()
     {
         _totalPoints += _bonusValue;
     }

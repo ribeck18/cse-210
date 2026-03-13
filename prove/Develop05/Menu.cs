@@ -1,4 +1,5 @@
 using System.IO;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.Serialization;
 
 class Menu
@@ -16,6 +17,17 @@ class Menu
         return int.Parse(choice);
     }
 
+    public int GetTotalScore(List<Goal> goalList)
+    {
+        int score = 0;
+        foreach (Goal goal in goalList)
+        {
+            score = score + goal.GetTotalPoints();
+        }
+        
+        return score;
+    }
+
     /// <summary>
     /// Asks a user for information to create a goal and creates the goal according to user input. Checks that user does not attempet to make a goal that doesnt exist.
     /// </summary>
@@ -27,7 +39,7 @@ class Menu
 
         while (choice != 1 && choice != 2 && choice != 3)
         {
-            Console.WriteLine("The types of goals are:\n1.Simple Goal\n2. Eternal Goal\n3. Checklist Goal\nWhat type of goal would you like to create?");
+            Console.WriteLine("The types of goals are:\n1. Simple Goal\n2. Eternal Goal\n3. Checklist Goal\nWhat type of goal would you like to create?");
             choice = GetUserChoice();
         }
         Console.WriteLine("Please enter a name for your goal.");
@@ -120,8 +132,7 @@ class Menu
                 ChecklistGoal checklistGoal = new ChecklistGoal(name, description, pointValue, totalPoints, isComplete, requiredCompletes, bonusValue, completionCount);
                 goalList.Add(checklistGoal);
             }
-
-           if (type == "SimpleGoal")
+            else if (type == "SimpleGoal")
             {
                 SimpleGoal simpleGoal = new SimpleGoal(name, description, pointValue, totalPoints, isComplete);
                 goalList.Add(simpleGoal);
@@ -134,9 +145,43 @@ class Menu
         }
         return goalList;
     }
-
-    public void RecordEvent()
+    /// <summary>
+    /// Records a completion event for a Goal from goalList that the user selects.
+    /// </summary>
+    /// <param name="goalList"></param>
+    public void RecordEvent(List<Goal> goalList)
     {
+        int count = 0;
+        Console.WriteLine("which goal did you complete?");
+        foreach (Goal goal in goalList)
+        {
+            count += 1;
+            Console.WriteLine($"{count}. {goal.GetGoalString()}");
+        }
         
+        int choice = GetUserChoice();
+
+        Goal userGoal = goalList[choice-1];
+        userGoal.CompletionEvent();
+
+        Console.WriteLine($"Great job, you recieved {userGoal.GetPointValue()} points!");
+
+        if (userGoal is ChecklistGoal checklistGoal)
+        {
+            if (userGoal.GetCompletion() == true)
+            {
+                Console.WriteLine($"Congratulations you recieved a bonus of {checklistGoal.GetBonus()} points!");
+            }
+        }
+        Console.WriteLine($"Your total score is {GetTotalScore(goalList)}");
+    }
+
+    public int MainMenu()
+    {
+        Console.WriteLine("What would you like to do?\n\n1. Create a Goal\n2. List Goals\n3. Save Goals\n4. Load Goals\n5. Record Action\n6. Quit");
+        Console.Write(">");
+        int.TryParse(Console.ReadLine(), out int userChoice);
+
+        return userChoice;
     }
 }

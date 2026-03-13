@@ -55,4 +55,19 @@ abstract class  Goal
     public abstract Dictionary<string, string> GetDict(); //I was going to use this to save but I remembered we can't use JSON in this class.
 
     public abstract string GetSaveString();
+
+    public int GetPointValue()
+    {
+        return _pointValue;
+    }
+
+    public int GetTotalPoints()
+    {
+        return _totalPoints;
+    }
+
+    public bool GetCompletion()
+    {
+        return _isComplete;
+    }
 }

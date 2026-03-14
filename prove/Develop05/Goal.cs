@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-abstract class  Goal
+abstract class Goal
 {
     //Attributes
     protected string _name;
@@ -16,6 +16,7 @@ abstract class  Goal
         _description = description;
         _pointValue = value;
     }
+
     public Goal(string name, string description, int value, int total, bool isComplete)
     {
         _name = name;
@@ -27,6 +28,7 @@ abstract class  Goal
 
     //Methods
     public abstract void CompletionEvent();
+
     public virtual string GetGoalString()
     {
         if (_isComplete == false)
@@ -37,7 +39,6 @@ abstract class  Goal
         {
             return $"""[X] {_name} ({_description})""";
         }
-        
     }
 
     public bool SetComplete()

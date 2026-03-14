@@ -17,8 +17,7 @@ class Program
 
             Console.WriteLine($"Your current score is {currentScore}");
             int menuChoice = menu.MainMenu();
-            
-            if (menuChoice ==  1)
+            if (menuChoice == 1)
             {
                 Goal newGoal = menu.CreateGoal();
                 goalList.Add(newGoal);
@@ -41,7 +40,7 @@ class Program
 
                 continue;
             }
-            else if  (menuChoice == 4)
+            else if (menuChoice == 4)
             {
                 Console.WriteLine("Please enter a file to load.");
                 Console.Write(">");

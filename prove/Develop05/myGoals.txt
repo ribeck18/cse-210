@@ -1,3 +1,2 @@
-SimpleGoal|Test S|Simple Goal|50|0|False
-EternalGoal|Test E|Eternal Goal|50|0|False
-ChecklistGoal|Test C|Checklist Goal|50|0|False|0|3|500
+SimpleGoal|My Simple|Simple Goal|50|50|True
+ChecklistGoal|test checklist|checklist goal|50|0|False|0|3|100

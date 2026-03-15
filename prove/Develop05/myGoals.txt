@@ -1,2 +1,0 @@
-SimpleGoal|My Simple|Simple Goal|50|50|True
-ChecklistGoal|test checklist|checklist goal|50|0|False|0|3|100

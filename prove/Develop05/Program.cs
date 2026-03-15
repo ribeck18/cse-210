@@ -9,7 +9,12 @@ class Program
         bool runMenu = true;
 
         Console.WriteLine("Welcome to the goal application.");
+
+        //Initalize Objects
         List<Goal> goalList = new List<Goal>();
+        BadgeSash sash = new BadgeSash();
+        AwardBadge award = new AwardBadge();
+        Stats playerStats = new Stats();
 
         while (runMenu)
         {
@@ -36,7 +41,7 @@ class Program
                 Console.WriteLine("Please enter the file name.");
                 Console.Write(">");
                 string fileName = Console.ReadLine();
-                menu.SaveGoals(goalList, fileName);
+                menu.SaveGoals(goalList, fileName, sash);
 
                 continue;
             }
@@ -45,33 +50,45 @@ class Program
                 Console.WriteLine("Please enter a file to load.");
                 Console.Write(">");
                 string fileName = Console.ReadLine();
-                goalList = menu.LoadGoals(fileName);
+                goalList = menu.LoadGoals(fileName, sash);
+                playerStats.UpdateScore(menu.GetTotalScore(goalList));
+                playerStats.UpdateGoals(goalList.Count);
+                foreach (Goal goal in goalList)
+                {
+                    string type = goal.GetType().ToString();
+                    bool isComplete;
+                    if (type == "ChecklistGoal")
+                    {
+                        isComplete = goal.GetCompletion();
+                        playerStats.updateChecklist(isComplete);
+                        break;
+                    }
+                }
 
                 continue;
             }
             else if (menuChoice == 5)
             {
-                menu.RecordEvent(goalList);
+                menu.RecordEvent(goalList, playerStats);
             }
             else if (menuChoice == 6)
             {
-                Console.WriteLine("Thanks for using the program!");
-                break;
+                sash.DisplaySash();
             }
             //Delete this after debug session.
             else if (menuChoice == 7)
             {
-                foreach (Goal goal in goalList)
-                {
-                    string type = goal.GetType().ToString();
-                    Console.WriteLine(type);
-                }
+                Console.WriteLine("Thanks for using the program!");
+                break;
             }
             else
             {
-                Console.WriteLine("Invlaid choice, please select 1, 2, 3, 4, 5, or 6.");
+                Console.WriteLine("Invlaid choice, please select 1, 2, 3, 4, 5, 6, or 7.");
                 continue;
             }
+
+            //Badge system
+            award.CompleteBadges(playerStats, sash);
         }
     }
 }

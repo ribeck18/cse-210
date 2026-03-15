@@ -102,15 +102,21 @@ class Menu
     /// </summary>
     /// <param name="goalList">Working list of goals</param>
     /// <param name="fileName">filename</param>
-    public void SaveGoals(List<Goal> goalList, string filePath)
+    public void SaveGoals(List<Goal> goalList, string filePath, BadgeSash sash)
     {
-        using (StreamWriter output = new StreamWriter(filePath))
+        string goalFilePath = $"{filePath}Goals.txt";
+        string badgeFilePath = $"{filePath}Badges.txt";
+
+        //Save Goals
+        using (StreamWriter output = new StreamWriter(goalFilePath))
         {
             foreach (Goal goal in goalList)
             {
                 output.WriteLine(goal.GetSaveString());
             }
         }
+        //Save badge
+        sash.SaveBadges(badgeFilePath);
     }
 
     /// <summary>
@@ -118,9 +124,12 @@ class Menu
     /// </summary>
     /// <param name="fileName">path of file to be loaded</param>
     /// <returns>list of goal objects</returns>
-    public List<Goal> LoadGoals(string fileName)
+    public List<Goal> LoadGoals(string fileName, BadgeSash sash)
     {
-        string[] goalStringList = File.ReadAllLines(fileName);
+        string goalsFilePath = $"{fileName}Goals.txt";
+        string badgesFilePath = $"{fileName}Badges.txt";
+
+        string[] goalStringList = File.ReadAllLines(goalsFilePath);
         List<Goal> goalList = [];
 
         foreach (string goalString in goalStringList)
@@ -173,6 +182,10 @@ class Menu
                 goalList.Add(eternalGoal);
             }
         }
+
+        //Load in badges to badge sash
+        sash.LoadBadges(badgesFilePath);
+
         return goalList;
     }
 
@@ -180,7 +193,7 @@ class Menu
     /// Records a completion event for a Goal from goalList that the user selects.
     /// </summary>
     /// <param name="goalList"></param>
-    public void RecordEvent(List<Goal> goalList)
+    public void RecordEvent(List<Goal> goalList, Stats playerStats)
     {
         int count = 0;
         Console.WriteLine("which goal did you complete?");
@@ -204,15 +217,20 @@ class Menu
                 Console.WriteLine(
                     $"Congratulations you recieved a bonus of {checklistGoal.GetBonus()} points!"
                 );
+                playerStats.updateChecklist(true);
             }
         }
         Console.WriteLine($"Your total score is {GetTotalScore(goalList)}");
+
+        //Update Player Stats
+        playerStats.UpdateGoals(1);
+        playerStats.UpdateScore(GetTotalScore(goalList));
     }
 
     public int MainMenu()
     {
         Console.WriteLine(
-            "What would you like to do?\n\n1. Create a Goal\n2. List Goals\n3. Save Goals\n4. Load Goals\n5. Record Action\n6. Quit"
+            "What would you like to do?\n\n1. Create a Goal\n2. List Goals\n3. Save To File\n4. Load From File\n5. Record Action\n6. Display Badges\n7. Quit"
         );
         Console.Write(">");
         int.TryParse(Console.ReadLine(), out int userChoice);
